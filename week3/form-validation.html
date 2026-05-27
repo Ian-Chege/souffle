@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Form Validation</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    form {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      width: 380px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    h2 { margin-bottom: 1.5rem; color: #333; text-align: center; }
+
+    .field { margin-bottom: 1.2rem; }
+
+    label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: 600;
+      color: #444;
+      font-size: 0.9rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.6rem 0.8rem;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      font-size: 1rem;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+
+    input:focus { border-color: #4f46e5; }
+    input.valid   { border-color: #22c55e; }
+    input.invalid { border-color: #ef4444; }
+
+    .error {
+      color: #ef4444;
+      font-size: 0.8rem;
+      margin-top: 0.3rem;
+      min-height: 1rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      background: #4f46e5;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background 0.2s;
+    }
+
+    button:hover { background: #4338ca; }
+
+    .success-msg {
+      display: none;
+      text-align: center;
+      color: #22c55e;
+      font-weight: 600;
+      margin-top: 1rem;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+<form id="myForm" novalidate>
+  <h2>Create Account</h2>
+
+  <!-- Name -->
+  <div class="field">
+    <label for="name">Full Name</label>
+    <input type="text" id="name" placeholder="John Doe" />
+    <div class="error" id="nameError"></div>
+  </div>
+
+  <!-- Email -->
+  <div class="field">
+    <label for="email">Email</label>
+    <input type="email" id="email" placeholder="john@example.com" />
+    <div class="error" id="emailError"></div>
+  </div>
+
+  <!-- Password -->
+  <div class="field">
+    <label for="password">Password</label>
+    <input type="password" id="password" placeholder="Min 8 characters" />
+    <div class="error" id="passwordError"></div>
+  </div>
+
+  <!-- Confirm Password -->
+  <div class="field">
+    <label for="confirm">Confirm Password</label>
+    <input type="password" id="confirm" placeholder="Repeat password" />
+    <div class="error" id="confirmError"></div>
+  </div>
+
+  <button type="submit">Sign Up</button>
+  <div class="success-msg" id="successMsg">Account created successfully!</div>
+</form>
+
+<script>
+  // ── Validation rules ──────────────────────────────────────────────────────
+
+  function validateName(value) {
+    if (value.trim() === '') return 'Name is required.';
+    if (value.trim().length < 2) return 'Name must be at least 2 characters.';
+    return '';
+  }
+
+  function validateEmail(value) {
+    if (value.trim() === '') return 'Email is required.';
+    // Basic email pattern check
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(value)) return 'Enter a valid email address.';
+    return '';
+  }
+
+  function validatePassword(value) {
+    if (value === '') return 'Password is required.';
+    if (value.length < 8) return 'Password must be at least 8 characters.';
+    return '';
+  }
+
+  function validateConfirm(value) {
+    const password = document.getElementById('password').value;
+    if (value === '') return 'Please confirm your password.';
+    if (value !== password) return 'Passwords do not match.';
+    return '';
+  }
+
+  // ── Helper: show or clear an error on one field ───────────────────────────
+
+  function showResult(inputId, errorId, errorMessage) {
+    const input = document.getElementById(inputId);
+    const errorEl = document.getElementById(errorId);
+
+    errorEl.textContent = errorMessage;
+
+    if (errorMessage) {
+      input.classList.add('invalid');
+      input.classList.remove('valid');
+    } else {
+      input.classList.add('valid');
+      input.classList.remove('invalid');
+    }
+
+    return errorMessage === '';   // returns true if valid
+  }
+
+  // ── Live validation: check each field as the user types ───────────────────
+
+  document.getElementById('name').addEventListener('input', function () {
+    showResult('name', 'nameError', validateName(this.value));
+  });
+
+  document.getElementById('email').addEventListener('input', function () {
+    showResult('email', 'emailError', validateEmail(this.value));
+  });
+
+  document.getElementById('password').addEventListener('input', function () {
+    showResult('password', 'passwordError', validatePassword(this.value));
+  });
+
+  document.getElementById('confirm').addEventListener('input', function () {
+    showResult('confirm', 'confirmError', validateConfirm(this.value));
+  });
+
+  // ── Submit: validate all fields before allowing submission ────────────────
+
+  document.getElementById('myForm').addEventListener('submit', function (e) {
+    e.preventDefault();   // stop the page from reloading
+
+    const results = [
+      showResult('name',     'nameError',     validateName(document.getElementById('name').value)),
+      showResult('email',    'emailError',    validateEmail(document.getElementById('email').value)),
+      showResult('password', 'passwordError', validatePassword(document.getElementById('password').value)),
+      showResult('confirm',  'confirmError',  validateConfirm(document.getElementById('confirm').value)),
+    ];
+
+    const allValid = results.every(Boolean);   // true only when every field passed
+
+    if (allValid) {
+      document.getElementById('successMsg').style.display = 'block';
+      this.reset();
+      // Remove the green borders after reset
+      document.querySelectorAll('input').forEach(i => i.classList.remove('valid', 'invalid'));
+    }
+  });
+</script>
+
+</body>
+</html>
