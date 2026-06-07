@@ -1,9 +1,5 @@
 # Advanced Web Design and Development
 
-Notion doc: https://www.notion.so/firebasedocs/ADVANCED-WEB-DESIGN-AND-DEVELOPMENT-LOG-36d031679001800b8817fb05a143fd0b?source=copy_link
-
----
-
 ## Souffle — E-Commerce Platform for Table Lamps
 
 A full-stack e-commerce platform for rare table lamps sourced from around the world. Built as the capstone project for this unit, using a modern TypeScript stack throughout.
