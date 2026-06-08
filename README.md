@@ -1,5 +1,7 @@
 # Advanced Web Design and Development
 
+VIEW DOCUMENTATION OF THE PROGRESS FORM HERE: https://github.com/Ian-Chege/souffle/blob/main/PROGRESS-LOGBOOK.pdf
+
 ## Souffle — E-Commerce Platform for Table Lamps
 
 A full-stack e-commerce platform for rare table lamps sourced from around the world. Built as the capstone project for this unit, using a modern TypeScript stack throughout.
