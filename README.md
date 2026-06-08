@@ -1,6 +1,6 @@
 # Advanced Web Design and Development
 
-VIEW DOCUMENTATION OF THE PROGRESS FORM HERE: https://github.com/Ian-Chege/souffle/blob/main/PROGRESS-LOGBOOK.pdf
+VIEW DOCUMENTATION OF THE PROGRESS FORM HERE: https://github.com/Ian-Chege/souffle/blob/main/PROGRESS-LOGBOOK.pdf OR YOU CAN VIEW THE WORD DOCUMENT HERE: https://us.wps.com/l/cbEaaocnhotqHwBb
 
 ## Souffle — E-Commerce Platform for Table Lamps
 
