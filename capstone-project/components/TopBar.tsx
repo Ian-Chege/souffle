@@ -3,10 +3,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCart } from "@/context/CartContext";
+import { useConvexAuth, useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 export default function TopBar() {
   const pathname = usePathname();
   const { cartCount } = useCart();
+  const { isAuthenticated, isLoading } = useConvexAuth();
+  const currentUser = useQuery(api.users.getCurrentUser);
 
   return (
     <header className="topbar">
@@ -29,6 +33,27 @@ export default function TopBar() {
           <Link href="/cart" className={pathname === "/cart" ? "active" : ""}>
             Cart{cartCount > 0 ? ` · ${cartCount}` : ""}
           </Link>
+          {!isLoading && (
+            isAuthenticated && currentUser ? (
+              <Link
+                href="/account"
+                className={`account-avatar${pathname === "/account" ? " active" : ""}`}
+                title={currentUser.email ?? "Account"}
+                aria-label="Your account"
+              >
+                {(currentUser.name ?? currentUser.email ?? "?")
+                  .charAt(0)
+                  .toUpperCase()}
+              </Link>
+            ) : (
+              <Link
+                href="/account"
+                className={pathname === "/account" ? "active" : ""}
+              >
+                Sign in
+              </Link>
+            )
+          )}
         </nav>
       </div>
     </header>

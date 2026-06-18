@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { useConvexAuth } from "convex/react";
@@ -22,10 +22,11 @@ export default function AdminSignInPage() {
   const [submitting, setSubmitting] = useState(false);
 
   // Already authenticated and admin → go to dashboard
-  if (!isLoading && isAuthenticated && isAdmin === true) {
-    router.replace("/admin/dashboard");
-    return null;
-  }
+  useEffect(() => {
+    if (!isLoading && isAuthenticated && isAdmin === true) {
+      router.replace("/admin/dashboard");
+    }
+  }, [isLoading, isAuthenticated, isAdmin, router]);
 
   async function handleEmailSubmit(e: React.FormEvent) {
     e.preventDefault();
