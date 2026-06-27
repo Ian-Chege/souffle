@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Inter_Tight, JetBrains_Mono } from "next/font/googl
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import ConvexClientProvider from "@/components/ConvexClientProvider";
+import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
 import TopBar from "@/components/TopBar";
 import Footer from "@/components/Footer";
 
@@ -34,20 +35,22 @@ export const metadata: Metadata = {
     "A Nairobi-based archive sourcing rare and one-of-a-kind table lamps from around the world. Found, conserved, rewired, resold.",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="en"
       className={`${cormorant.variable} ${interTight.variable} ${jetbrains.variable}`}
     >
       <body>
-        <ConvexClientProvider>
-          <CartProvider>
-            <TopBar />
-            {children}
-            <Footer />
-          </CartProvider>
-        </ConvexClientProvider>
+        <ConvexAuthNextjsServerProvider>
+          <ConvexClientProvider>
+            <CartProvider>
+              <TopBar />
+              {children}
+              <Footer />
+            </CartProvider>
+          </ConvexClientProvider>
+        </ConvexAuthNextjsServerProvider>
       </body>
     </html>
   );
