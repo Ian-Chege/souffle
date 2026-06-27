@@ -103,6 +103,9 @@ h1, h2, h3, h4 {
   margin: 0 auto;
   padding: 0 var(--space-md);
 }
+@media (max-width: 640px) {
+  .container { padding-left: var(--space-lg); padding-right: var(--space-lg); }
+}
 
 .measure { max-width: 64ch; }
 
@@ -127,7 +130,8 @@ h1, h2, h3, h4 {
   grid-template-columns: auto 1fr auto;
   align-items: end;
   gap: var(--space-md);
-  padding: var(--space-lg) 0 var(--space-md);
+  padding-top: var(--space-lg);
+  padding-bottom: var(--space-md);
 }
 .brand {
   font-family: var(--font-display);
@@ -193,7 +197,8 @@ h1, h2, h3, h4 {
   .topbar-inner {
     grid-template-columns: 1fr;
     gap: var(--space-sm);
-    padding: var(--space-md) 0;
+    padding-top: var(--space-md);
+    padding-bottom: var(--space-md);
   }
   .nav { justify-self: start; gap: var(--space-md); }
 }
@@ -590,6 +595,13 @@ h1, h2, h3, h4 {
   padding: var(--space-md) 0;
   border-bottom: var(--rule);
   align-items: center;
+}
+@media (max-width: 480px) {
+  .cart-item {
+    grid-template-columns: 72px 1fr;
+    grid-template-rows: auto auto;
+  }
+  .line-price { grid-column: 2 / 3; }
 }
 .cart-thumb {
   position: relative;
